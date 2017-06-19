@@ -1,19 +1,39 @@
 var CARDS = [];
 var blankCard;
 function initCards() {
-	// name, ctd, cth, color, effectCond, effect, text, coinVal, bustCond, vp
-	CARDS.push(new Card("Basic 1", 1, 4, 0, function() {return false}, function() {return false}, "A starting card", 1, [0, 1, 1, 0], 1));
-	CARDS.push(new Card("Basic 2", 1, 2, 1, function() {return false}, function() {return false}, "A starting card", 1, [0, 0, 2, 0], 1));
-	CARDS.push(new Card("Basic 3", 1, 3, 2, function() {return false}, function() {return false}, "A starting card", 1, [0, 2, 0, 0], 1));
-	CARDS.push(new Card("idk1", 3, 6, 1, function() {return false}, function() {return false}, "Farm", 3, [0, 2, 2, 0], 3));
-	CARDS.push(new Card("idk2", 4, 4, 0, function() {return false}, function() {return false}, "A starting card", 1, [2, 0, 0, 0], 5));
-	CARDS.push(new Card("idk3", 6, 1, 2, function() {return false}, function() {return false}, "More money!", 4, [2, 2, 0, 0], 1));
-	CARDS.push(new Card("idk4", 8, 2, 1, function() {return false}, function() {return false}, "Lotta money", 6, [2, 0, 2, 0], 3));
-	CARDS.push(new Card("idk5", 6, 6, 1, function() {return false}, function() {return false}, "Points!", 2, [0, 2, 2, 0], 8));
-	CARDS.push(new Card("idk6", 8, 8, 2, function() {return false}, function() {return false}, "max points", 2, [0, 0, 1, 0], 12));
-	CARDS.push(new Card("idk7", 4, 2, 0, function() {return false}, function() {return false}, "all around card", 2, [2, 0, 0, 0], 5));
-	
-	
-	blankCard = new Card("", 0, 0, 3, function() {return false}, function() {return false}, "DECK", 0, [0, 0, 0, 0], 0);
+	// color, number, coinVal, comboColors, comboNumbers
+	CARDS.push(new Card(2, 1, [0, 0, 1, 1, 0], [0, 0, 1, 1, 0]));
 }
 
+function generateCardSet(size, minVal, maxVal) {
+	var c = [];
+	for (var i = 0; i < size; ++i) {
+		do {var value = minVal + Math.floor(Math.random() * maxVal);} while (value === 14);
+		var doubleSpec = Math.floor(value / 3);
+		var singleSpec = value % 3;
+		var specs = [0, 0, 0, 0, 0];
+		for (var s = 0; s < doubleSpec; ++s) {
+			specs[s] = 2;
+		}
+		for (var t = 0; t < singleSpec; ++t) {  // don't ask
+			specs[s + t] = 1;
+		}
+		shuffle(specs);
+		var colors = [undefined, undefined, undefined, undefined, undefined];
+		var numbers = [undefined, undefined, undefined, undefined, undefined];
+		for (var s = 0; s < 5; ++s) {
+			if (specs[s] === 2) {
+				colors[s] = Math.floor(Math.random() * 3);
+				numbers[s] = Math.floor(Math.random() * 3);
+			}
+			if (specs[s] === 1) {
+				if (Math.random() < .5)
+					colors[s] = Math.floor(Math.random() * 3);	
+				else
+					numbers[s] = Math.floor(Math.random() * 3);
+			}
+		}
+		c.push(new Card(Math.floor((i / size) * 3), i % 3, value * 2, colors, numbers));
+	}
+	return c;
+}

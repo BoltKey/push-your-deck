@@ -19,3 +19,10 @@ Ability: Here can be literally anything.
 Coin value: How much coins you gain from this card if you don't bust
 Bust condition: After revealing the card, if the condition is met, you lose your turn.
 Color: Red, Green, Blue, Black (special)
+
+That concept turned out to not work.
+
+Here's another idea: You draw a card and then pick 1 out of 4 or 5 spots to place it. Anytime, you can pay something to swap two cards or put a card into the bust pile. If the cards on the table match with one of your combo cards in hand, you can put the card on your tableau 
+
+Each card has
+Combo
